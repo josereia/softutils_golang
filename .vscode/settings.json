@@ -3,5 +3,11 @@
   "editor.wordWrap": "wordWrapColumn",
   "editor.wordWrapColumn": 80,
   "editor.rulers": [80],
-  "cSpell.words": ["softutils", "softyesti", "testdata"]
+  "cSpell.words": [
+    "github",
+    "softutils",
+    "softyesti",
+    "testdata",
+    "wkhtmltopdf"
+  ]
 }

@@ -19,7 +19,7 @@ install:
 run:
 	@echo "Running the application"
 	@go mod tidy 
-	@air
+	@go run main.go
 
 build:
 	@echo "Building the application"
