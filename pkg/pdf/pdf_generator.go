@@ -35,6 +35,7 @@ func (generator *pdfGeneratorImpl) Create(data interface{}) (string, error) {
 		return "", err
 	}
 
+	pdf.Cover.EnableLocalFileAccess.Set(true)
 	pdf.AddPage(wk.NewPageReader(file))
 
 	err = pdf.Create()
