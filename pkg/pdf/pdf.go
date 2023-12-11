@@ -1,17 +1,19 @@
 package pdf
 
+import "bytes"
+
 type Pdf struct {
 	TemplatePath string
 	TemplateData interface{}
 	Path         string
 }
 
-func (pdf *Pdf) Generate() (string, error) {
+func (pdf *Pdf) Generate() (*bytes.Buffer, error) {
 	generator := newPdfGenerator(pdf.TemplatePath, pdf.Path)
-	path, err := generator.Create(pdf.TemplateData)
+	buffer, err := generator.Create(pdf.TemplateData)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
-	return path, nil
+	return buffer, nil
 }
