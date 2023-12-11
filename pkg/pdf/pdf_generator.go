@@ -42,21 +42,17 @@ func (generator *pdfGeneratorImpl) Create(data interface{}) (
 	pdf.Cover.EnableLocalFileAccess.Set(true)
 	pdf.AddPage(wk.NewPageReader(file))
 
-	err = file.Close()
-	if err != nil {
-		return nil, err
-	}
-
 	err = pdf.Create()
 	if err != nil {
 		return nil, err
 	}
 
-	err = pdf.WriteFile(generator.Path)
+	bytes := pdf.Bytes()
+
+	err = file.Close()
 	if err != nil {
 		return nil, err
 	}
 
-	bytes := pdf.Bytes()
 	return &bytes, nil
 }

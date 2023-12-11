@@ -8,10 +8,10 @@ type Pdf struct {
 
 func (pdf *Pdf) Generate() (*[]byte, error) {
 	generator := newPdfGenerator(pdf.TemplatePath, pdf.Path)
-	buffer, err := generator.Create(pdf.TemplateData)
+	bytes, err := generator.Create(pdf.TemplateData)
 	if err != nil {
 		return nil, err
 	}
 
-	return buffer, nil
+	return bytes, nil
 }
