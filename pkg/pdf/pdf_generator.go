@@ -1,14 +1,13 @@
 package pdf
 
 import (
-	"bytes"
 	"os"
 
 	wk "github.com/SebastiaanKlippert/go-wkhtmltopdf"
 )
 
 type pdfGenerator interface {
-	Create(data interface{}) (*bytes.Buffer, error)
+	Create(data interface{}) (*[]byte, error)
 }
 
 type pdfGeneratorImpl struct {
@@ -21,7 +20,7 @@ func newPdfGenerator(templatePath string, path string) pdfGenerator {
 }
 
 func (generator *pdfGeneratorImpl) Create(data interface{}) (
-	*bytes.Buffer,
+	*[]byte,
 	error,
 ) {
 	parser := newHtmlParser(generator.TemplatePath)
@@ -58,5 +57,6 @@ func (generator *pdfGeneratorImpl) Create(data interface{}) (
 		return nil, err
 	}
 
-	return pdf.Buffer(), nil
+	bytes := pdf.Bytes()
+	return &bytes, nil
 }
