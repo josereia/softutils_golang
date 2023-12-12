@@ -14,15 +14,15 @@ package main
 import "github.com/softyesti/softutils_golang/pkg/pdf"
 
 func main() {
-    pdfi := &pdf.Pdf{
-        TemplatePath: "path"
-	TemplateData: interface{}
-    }
+  pdfi := &pdf.Pdf{
+    TemplatePath: "path"
+    TemplateData: interface{}
+  }
 
-    bytes, err := pdfi.Generate()
-    if err != nil {
-        panic(err)
-    }
+  bytes, err := pdfi.Generate()
+  if err != nil {
+    panic(err)
+  }
 }
 ```
 
@@ -38,14 +38,14 @@ package main
 import "github.com/softyesti/softutils_golang/pkg/soffice"
 
 func main() {
-    office := &soffice.Soffice{
-        Path: "path" // optional custom libre office installation path
-    }
+  office := &soffice.Soffice{
+    Path: "path" // optional custom libre office installation path
+  }
 
-    bytes, err := office.ToPdf("file_path")
-    if err != nil {
-        panic(err)
-    }
+  bytes, err := office.ToPdf("file_path")
+  if err != nil {
+    panic(err)
+  }
 }
 
 ```
@@ -62,19 +62,19 @@ package main
 import "github.com/softyesti/softutils_golang/pkg/mimetype"
 
 func main() {
-    helper:= &mimetype.MimeType{}
+  helper:= &mimetype.MimeType{}
 
-    mimeTypeName, err := helper.GetMimeType(mimetype.PDFMimeType)
-    if err != nil {
-        panic(err)
-    }
+  mimeTypeName, err := helper.GetMimeType(mimetype.PDFMimeType)
+  if err != nil {
+    panic(err)
+  }
 
-    mimeTypeEnum, mimeTypeName := helper.GetMimeTypeByExtension("pdf")
+  mimeTypeEnum, mimeTypeName := helper.GetMimeTypeByExtension("pdf")
 
-    isDocx, err := helper.CompareMimeType("application/msword", helper.DOCMimeType)
-    if err != nil {
-        panic(err)
-    }
+  isDocx, err := helper.CompareMimeType("application/msword", helper.DOCMimeType)
+  if err != nil {
+    panic(err)
+  }
 }
 
 ```
