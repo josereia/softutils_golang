@@ -5,9 +5,19 @@
   "editor.rulers": [80],
   "cSpell.words": [
     "github",
+    "msword",
+    "officedocument",
+    "openxmlformats",
+    "outdir",
+    "powerpoint",
+    "presentationml",
+    "SebastiaanKlippert",
+    "soffice",
     "softutils",
     "softyesti",
+    "spreadsheetml",
     "testdata",
-    "wkhtmltopdf"
+    "wkhtmltopdf",
+    "wordprocessingml"
   ]
 }
