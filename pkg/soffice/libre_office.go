@@ -1,6 +1,7 @@
 package soffice
 
 import (
+	"errors"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -27,14 +28,18 @@ func (office *libreOfficeImpl) ToPdf(path string) (*[]byte, error) {
 		"--headless",
 		"--convert-to",
 		"pdf",
-		path,
 		"--outdir",
 		tempDir,
+		path,
 	)
+
+	var stdout, stderr strings.Builder
+	command.Stdout = &stdout
+	command.Stderr = &stderr
 
 	err := command.Run()
 	if err != nil {
-		return nil, err
+		return nil, errors.New(stdout.String())
 	}
 
 	inputFileName := strings.Split(filepath.Base(path), ".")[0] + ".pdf"
