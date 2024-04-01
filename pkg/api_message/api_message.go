@@ -12,9 +12,9 @@ svc.Message.BadRequest("sla...", methods)
 type ApiConfigFunc func(*ApiMessage)
 
 type ApiMessage struct {
-	HttpCode   int
-	HttpStatus string
-	Message    Message
+	HttpCode   int     `json:"http_code"`
+	HttpStatus string  `json:"http_status"`
+	Message    Message `json:"message,omitempty"`
 }
 
 func NewApiMessage(httpCode int, configs ...MessageFunc) ApiMessage {
@@ -41,7 +41,7 @@ func (msg *ApiMessage) Update(configs ...ApiConfigFunc) {
 
 func (msg *ApiMessage) String() string {
 
-	if messageLvl == DEBUG && msg.Message.Stack != "" {
+	if showMessageLvl == DEBUG && msg.Message.Stack != "" {
 		return fmt.Sprintf(
 			"[%s] >  %s\nstacktrace= %s",
 			msg.HttpStatus,

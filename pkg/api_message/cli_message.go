@@ -1,6 +1,8 @@
 package messages
 
 import (
+	"encoding/json"
+	"fmt"
 	"log"
 	"os"
 )
@@ -16,10 +18,10 @@ stack
 type CliConfigFunc func(*CliMessage)
 
 type CliMessage struct {
-	Title   string
-	Doc     string
-	Solve   string
-	Message Message
+	Title   string  `json:"title"`
+	Doc     string  `json:"doc,omitempty"`
+	Solve   string  `json:"solve,omitempty"`
+	Message Message `json:"message"`
 }
 
 func NewCliMessage(title string, configs ...MessageFunc) CliMessage {
@@ -34,41 +36,63 @@ func NewCliMessage(title string, configs ...MessageFunc) CliMessage {
 	}
 }
 
-func (cfg *CliMessage) Edit(configs ...CliConfigFunc) {
+func (msg *CliMessage) Edit(configs ...CliConfigFunc) {
 	for _, fn := range configs {
-		fn(cfg)
+		fn(msg)
 	}
 }
 
 func WithSolve(solve string) CliConfigFunc {
-	return func(cfg *CliMessage) {
-		cfg.Solve = solve
+	return func(msg *CliMessage) {
+		msg.Solve = solve
 	}
 }
 
 func WithDoc(doc string) CliConfigFunc {
-	return func(cfg *CliMessage) {
-		cfg.Doc = doc
+	return func(msg *CliMessage) {
+		msg.Doc = doc
 	}
 }
 
-func (cfg *CliMessage) String() string {
-	return ""
+func (msg *CliMessage) String() string {
+	formattedMsg := fmt.Sprintf(
+		"[%s] %s\n%s\n", msg.Message.RootError, msg.Title, msg.Message.Description,
+	)
+
+	if msg.Solve != "" {
+		formattedMsg += fmt.Sprintf("%s\n", msg.Solve)
+	}
+
+	if msg.Doc != "" {
+		formattedMsg += fmt.Sprint(msg.Doc)
+	}
+
+	return formattedMsg
+
 }
 
-func (cfg CliMessage) ToStdout() {
-	if _, err := os.Stdout.WriteString(cfg.String()); err != nil {
+func (msg *CliConfigFunc) BindJson() string {
+	jsonData, err := json.MarshalIndent(msg, " ", "  ")
+	if err != nil {
+		panic("Error on marshal json on softutils in module CliMessage")
+	}
+
+	return string(jsonData)
+}
+
+func (msg CliMessage) ToStdout() {
+	if _, err := os.Stdout.WriteString(msg.String()); err != nil {
 		log.Fatal("sla...")
 	}
-	setExitCode(cfg.Message.Level)
+	setExitCode(msg.Message.Level)
 }
 
-func (cfg *CliMessage) ToStderr() {
-	if _, err := os.Stderr.WriteString(cfg.String()); err != nil {
+func (msg *CliMessage) ToStderr() {
+	if _, err := os.Stderr.WriteString(msg.String()); err != nil {
 		log.Fatal("sla...")
 	}
 
-	setExitCode(cfg.Message.Level)
+	setExitCode(msg.Message.Level)
 }
 
 func setExitCode(lvl Level) {

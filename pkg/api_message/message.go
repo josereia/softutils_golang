@@ -4,11 +4,11 @@ import "errors"
 
 // import "github.com/pkg/errors"
 
-var messageLvl Level
+var showMessageLvl Level
 var messageLanguage Language
 
-func SetMessageLvl(lvl Level) {
-	messageLvl = lvl
+func SetShowMessageLvl(lvl Level) {
+	showMessageLvl = lvl
 }
 
 func SetMessageLanguage(lang Language) {
@@ -21,6 +21,7 @@ type Message struct {
 	Description string `json:"description,omitempty"`
 	Stack       string `json:"stack,omitempty"`
 	Level       Level  `json:"level,omitempty"`
+	RootError   error  `json:"root_error,omitempty"`
 }
 
 func WithCustomDescription(description string) MessageFunc {
@@ -31,7 +32,8 @@ func WithCustomDescription(description string) MessageFunc {
 
 func WithRootError(err error) MessageFunc {
 	return func(msg *Message) {
-		// msg.Stack = errors.Cause(err).Error()
+		msg.RootError = err
+		msg.Description = err.Error()
 		msg.Stack = errors.Unwrap(err).Error()
 	}
 }
