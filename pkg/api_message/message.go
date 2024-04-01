@@ -34,7 +34,11 @@ func WithRootError(err error) MessageFunc {
 	return func(msg *Message) {
 		msg.RootError = err
 		msg.Description = err.Error()
-		msg.Stack = errors.Unwrap(err).Error()
+		rootError := errors.Unwrap(err)
+
+		if rootError != nil {
+			msg.Stack = errors.Unwrap(err).Error()
+		}
 	}
 }
 
