@@ -18,9 +18,7 @@ type ApiMessage struct {
 }
 
 func NewApiMessage(httpCode int, configs ...MessageFunc) ApiMessage {
-	newMsg := Message{
-		Description: "sla...",
-	}
+	newMsg := Message{}
 
 	for _, fn := range configs {
 		fn(&newMsg)

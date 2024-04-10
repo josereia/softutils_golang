@@ -56,7 +56,7 @@ func WithDoc(doc string) CliConfigFunc {
 
 func (msg *CliMessage) String() string {
 	formattedMsg := fmt.Sprintf(
-		"[%s] %s\n%s\n", msg.Message.RootError, msg.Title, msg.Message.Description,
+		"[%s] %s\n%s\n", msg.Message.Error, msg.Title, msg.Message.Description,
 	)
 
 	if msg.Solve != "" {
