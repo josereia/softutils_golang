@@ -1,6 +1,8 @@
 package messages
 
 import (
+	"strings"
+
 	"github.com/pkg/errors"
 )
 
@@ -33,7 +35,7 @@ func WithCustomDescription(description string) MessageFunc {
 
 func WithError(err error) MessageFunc {
 	return func(msg *Message) {
-		msg.Description = errors.Cause(err).Error()
+		msg.Description = strings.ToTitle(errors.Cause(err).Error())
 
 		rootError := errors.Unwrap(err)
 
