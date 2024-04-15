@@ -26,10 +26,14 @@ func NewForbidden(msg string, messageFuncs ...MessageFunc) apiMessage {
 	return setUpApiMessage(setUpMessage(msg, messageFuncs...), Forbidden)
 }
 
+func NewInternal(msg string, messageFuncs ...MessageFunc) apiMessage {
+	return setUpApiMessage(setUpMessage(msg, messageFuncs...), Internal)
+}
+
 func setUpApiMessage(message Message, apiFuncs ...ApiConfigFunc) apiMessage {
 	var apiMsg apiMessage
 
-	InternalServerError(&apiMsg)
+	Internal(&apiMsg)
 
 	for _, fn := range apiFuncs {
 		fn(&apiMsg)

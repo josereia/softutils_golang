@@ -76,7 +76,7 @@ func Forbidden(cfg *apiMessage) {
 	setHttpConfig(http.StatusForbidden)
 }
 
-func InternalServerError(cfg *apiMessage) {
+func Internal(cfg *apiMessage) {
 	setHttpConfig(http.StatusInternalServerError)
 }
 
