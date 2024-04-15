@@ -5,28 +5,26 @@ import (
 	"net/http"
 )
 
-type ApiConfigFunc func(*apiMessage)
+type ApiConfigFunc func(*ApiMessage)
 
-type apiMessage struct {
+type ApiMessage struct {
 	HttpCode   int     `json:"http_code"`
 	HttpStatus string  `json:"http_status"`
 	Timestamp  string  `json:"timestamp"`
 	Message    Message `json:"message,omitempty"`
 }
 
-func NewApiMessage(httpCode int, msg string, messageFuncs ...MessageFunc) apiMessage {
-	return setUpApiMessage(
-		setUpMessage(msg, messageFuncs...), setHttpConfig(httpCode),
-	)
+func NewApiMessage(httpCode int, msg string, messageFuncs ...MessageFunc) ApiMessage {
+	return ApiMessage{}
 }
 
-func (msg *apiMessage) Update(configs ...ApiConfigFunc) {
+func (msg *ApiMessage) Update(configs ...ApiConfigFunc) {
 	for _, fn := range configs {
 		fn(msg)
 	}
 }
 
-func (msg *apiMessage) String() string {
+func (msg *ApiMessage) String() string {
 
 	if showMessageLvl == DEBUG && msg.Message.Stack != "" {
 		return fmt.Sprintf(
@@ -45,11 +43,9 @@ func (msg *apiMessage) String() string {
 
 }
 
-func setHttpConfig(code int) ApiConfigFunc {
-	return func(apiMsg *apiMessage) {
-		apiMsg.HttpCode = code
-		apiMsg.HttpStatus = generateHttpStatusMsg(code)
-	}
+func setHttpConfig(code int, apiMsg *ApiMessage) {
+	apiMsg.HttpCode = code
+	apiMsg.HttpStatus = generateHttpStatusMsg(code)
 }
 
 func generateHttpStatusMsg(code int) string {
@@ -61,33 +57,33 @@ func generateHttpStatusMsg(code int) string {
 		status = HttpStatusPt(code)
 	}
 
-	return fmt.Sprintf("%d %s", code, status)
+	return fmt.Sprintf("[%d] %s", code, status)
 }
 
-func BadRequest(cfg *apiMessage) {
-	setHttpConfig(http.StatusBadRequest)
+func BadRequest(cfg *ApiMessage) {
+	setHttpConfig(http.StatusBadRequest, cfg)
 }
 
-func Conflict(cfg *apiMessage) {
-	setHttpConfig(http.StatusConflict)
+func Conflict(cfg *ApiMessage) {
+	setHttpConfig(http.StatusConflict, cfg)
 }
 
-func Forbidden(cfg *apiMessage) {
-	setHttpConfig(http.StatusForbidden)
+func Forbidden(cfg *ApiMessage) {
+	setHttpConfig(http.StatusForbidden, cfg)
 }
 
-func Internal(cfg *apiMessage) {
-	setHttpConfig(http.StatusInternalServerError)
+func Internal(cfg *ApiMessage) {
+	setHttpConfig(http.StatusInternalServerError, cfg)
 }
 
-func NoContent(cfg *apiMessage) {
-	setHttpConfig(http.StatusNoContent)
+func NoContent(cfg *ApiMessage) {
+	setHttpConfig(http.StatusNoContent, cfg)
 }
 
-func NotFound(cfg *apiMessage) {
-	setHttpConfig(http.StatusNotFound)
+func NotFound(cfg *ApiMessage) {
+	setHttpConfig(http.StatusNotFound, cfg)
 }
 
-func Unauthorized(cfg *apiMessage) {
-	setHttpConfig(http.StatusUnauthorized)
+func Unauthorized(cfg *ApiMessage) {
+	setHttpConfig(http.StatusUnauthorized, cfg)
 }

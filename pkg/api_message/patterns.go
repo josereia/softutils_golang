@@ -2,36 +2,36 @@ package messages
 
 import "time"
 
-func NewBadRequest(msg string, messageFuncs ...MessageFunc) apiMessage {
+func NewBadRequest(msg string, messageFuncs ...MessageFunc) ApiMessage {
 	return setUpApiMessage(setUpMessage(msg, messageFuncs...), BadRequest)
 }
 
-func NewNotFound(msg string, messageFuncs ...MessageFunc) apiMessage {
+func NewNotFound(msg string, messageFuncs ...MessageFunc) ApiMessage {
 	return setUpApiMessage(setUpMessage(msg, messageFuncs...), NotFound)
 }
 
-func NewConflict(msg string, messageFuncs ...MessageFunc) apiMessage {
+func NewConflict(msg string, messageFuncs ...MessageFunc) ApiMessage {
 	return setUpApiMessage(setUpMessage(msg, messageFuncs...), Conflict)
 }
 
-func NewUnauthorized(msg string, messageFuncs ...MessageFunc) apiMessage {
+func NewUnauthorized(msg string, messageFuncs ...MessageFunc) ApiMessage {
 	return setUpApiMessage(setUpMessage(msg, messageFuncs...), Unauthorized)
 }
 
-func NewNoContent(msg string, messageFuncs ...MessageFunc) apiMessage {
+func NewNoContent(msg string, messageFuncs ...MessageFunc) ApiMessage {
 	return setUpApiMessage(setUpMessage(msg, messageFuncs...), NoContent)
 }
 
-func NewForbidden(msg string, messageFuncs ...MessageFunc) apiMessage {
+func NewForbidden(msg string, messageFuncs ...MessageFunc) ApiMessage {
 	return setUpApiMessage(setUpMessage(msg, messageFuncs...), Forbidden)
 }
 
-func NewInternal(msg string, messageFuncs ...MessageFunc) apiMessage {
+func NewInternal(msg string, messageFuncs ...MessageFunc) ApiMessage {
 	return setUpApiMessage(setUpMessage(msg, messageFuncs...), Internal)
 }
 
-func setUpApiMessage(message Message, apiFuncs ...ApiConfigFunc) apiMessage {
-	var apiMsg apiMessage
+func setUpApiMessage(message Message, apiFuncs ...ApiConfigFunc) ApiMessage {
+	var apiMsg ApiMessage
 
 	Internal(&apiMsg)
 
@@ -48,7 +48,7 @@ func setUpApiMessage(message Message, apiFuncs ...ApiConfigFunc) apiMessage {
 func setUpMessage(msg string, messageFuncs ...MessageFunc) Message {
 	var message Message
 
-	message.Description = msg
+	message.Title = msg
 
 	for _, fn := range messageFuncs {
 		fn(&message)
