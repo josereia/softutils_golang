@@ -8,8 +8,8 @@ import (
 type RefreshClaims struct{ jwt.StandardClaims }
 type AccessClaims struct {
 	jwt.StandardClaims
-	Id   string `json:"id"`
-	Role uint   `json:"role"`
+	Id    string `json:"id"`
+	Roles []uint `json:"roles"`
 }
 
 type AuthTokenUtil struct {
