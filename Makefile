@@ -19,7 +19,7 @@ install:
 run:
 	@echo "Running the application"
 	@go mod tidy 
-	@go run main.go
+	@go run ./examples/auth_example.go
 
 build:
 	@echo "Building the application"
