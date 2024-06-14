@@ -3,6 +3,8 @@ package messages
 import (
 	"fmt"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 type ApiConfigFunc func(*ApiMessage)
@@ -41,6 +43,10 @@ func (msg *ApiMessage) String() string {
 		msg.Message.Description,
 	)
 
+}
+
+func (msg *ApiMessage) ToResponseJSON(ctx *gin.Context) {
+	ctx.JSON(msg.HttpCode, msg)
 }
 
 func setHttpConfig(code int, apiMsg *ApiMessage) {
