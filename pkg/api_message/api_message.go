@@ -45,7 +45,9 @@ func (msg *ApiMessage) String() string {
 
 }
 
+// Set up and send apiError to ctx.JSON.
 func (msg *ApiMessage) ToResponseJSON(ctx *gin.Context) {
+	fmt.Println(">>> HTTP ERROR:\n ", msg)
 	ctx.JSON(msg.HttpCode, msg)
 }
 
