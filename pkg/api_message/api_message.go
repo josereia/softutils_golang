@@ -51,6 +51,10 @@ func (msg *ApiMessage) ToResponseJSON(ctx *gin.Context) {
 	ctx.JSON(msg.HttpCode, msg)
 }
 
+func (msg *ApiMessage) IsValid() bool {
+	return msg.HttpCode != 0
+}
+
 func setHttpConfig(code int, apiMsg *ApiMessage) {
 	apiMsg.HttpCode = code
 	apiMsg.HttpStatus = generateHttpStatusMsg(code)
