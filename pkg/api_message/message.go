@@ -25,6 +25,7 @@ type Message struct {
 	Stack       string `json:"stack,omitempty"`
 	Level       Level  `json:"level,omitempty"`
 	Error       string `json:"root_error,omitempty"`
+	Code        string `json:"code"`
 }
 
 func WithCustomDescription(description string) MessageFunc {
@@ -48,5 +49,11 @@ func WithError(err error) MessageFunc {
 func (msg *Message) Edit(configs ...MessageFunc) {
 	for _, fn := range configs {
 		fn(msg)
+	}
+}
+
+func SetCode(code string) MessageFunc {
+	return func(msg *Message) {
+		msg.Code = code
 	}
 }
