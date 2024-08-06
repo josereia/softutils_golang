@@ -7,6 +7,7 @@ const (
 	ErrMalformedFormData   = "ErrMalformedFormData"
 	ErrMissingId           = "ErrMissingId"
 	ErrMissingDTO          = "ErrMissingDTO"
+	ErrMisingAsset         = "ErrMissingAsset"
 	ErrInvalidFileCount    = "ErrInvalidFileCount"
 	ErrInvalidFileType     = "ErrInvalidFiletype"
 	ErrInvalidToken        = "ErrInvalidToken"
