@@ -5,6 +5,8 @@ const (
 	ErrConstraintViolation = "ErrConstraintViolation"
 	ErrUserNotApproved     = "ErrUserNotApproved"
 	ErrMalformedFormData   = "ErrMalformedFormData"
+	ErrMissingRelationId 	 = "ErrMissingRelationId"
+	ErrMissingQueryParam 	 = "ErrMissingQueryParam"
 	ErrMissingId           = "ErrMissingId"
 	ErrMissingDTO          = "ErrMissingDTO"
 	ErrMissingAsset        = "ErrMissingAsset"
